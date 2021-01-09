@@ -1,2 +1,2 @@
 # SquareBreath144
-Adruino NeoPixel Breating
+Adruino NeoPixel Breathing
