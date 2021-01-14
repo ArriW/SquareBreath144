@@ -13,26 +13,30 @@ void Square() {
   int      loopNum       = 0;
   int      x            = 0;
   for (;;) { // Repeat loops value
+    
+strip.fill(strip.Color(0, 0, 0, 0)); 
+// set everything to 0
 // i to strip.numPixels() = 144 
+// Loop#1
     for (int i = 0; i < strip.numPixels(); i++) { // For each pixel on strip
+      // Loop#1.1
       for (int j = 0; j < 256; j = j + 50) { // Ramp up from 0 to 255,. where j white intensity
 
         strip.setPixelColor(i, strip.Color(0, 0, 0, strip.gamma8(j))); //set up color
         delay(delaytime);
-        strip.show(); //show color
-        delay(100);
+        strip.show(); 
+
       }
+      for (int j = 255; j >= 0; j = j - 50) { 
 
-      for (int j = 255; j >= 0; j = j - 50) { // Ramp down
 
-        strip.setPixelColor(x = i - whiteLength, strip.Color(0, 0, 0, strip.gamma8(j)));
-        delay(100);
-        strip.show();
-
+        strip.setPixelColor(i, strip.Color(0, 0, 0, strip.gamma8(j))); //set up color
+        delay(delaytime);
+        strip.show();                                                                                                                                                                                                     ./ 
         if ((loopNum >= 1) && (i <= 36)) {
           strip.setPixelColor(x = i - whiteLength + 144, strip.Color(0, 0, 0, strip.gamma8(j)));
-          delay(delaytime);
-          strip.show();
+        delay(delaytime);
+        strip.show(); 
         }
 
       }
