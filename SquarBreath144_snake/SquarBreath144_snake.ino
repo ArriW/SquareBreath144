@@ -16,13 +16,14 @@ void markers(){
 
 void Square() {
 // Parameters
-  int whiteLength         = 3;
+  int whiteLength         = 2;
   int stripLength        =144;
   int      loops           = 4;
   int      loopNum        = 0;
   int      x              = 0;
   int maxbrightness     =255; //255
-  int brightnessStep    =maxbrightness/8; 
+  int timer =40; // seconds
+  int brightnessStep    =maxbrightness/timer*2; 
   //unsigned long period = 3;
   
 // Timers
