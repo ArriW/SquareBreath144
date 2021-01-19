@@ -88,18 +88,33 @@ void setup(){
 }
 
 void loop() {
+  
   strip.fill(strip.Color(strip.gamma8(minbrightness), 0, 0, strip.gamma8(minbrightness)));
    strip.show();  
+   
   int statusSensor = digitalRead (IRSensor);
+  
   if (statusSensor == 1)
   {
     intro();
+    for(int i=0; i <2;i++){
+          strip.setPixelColor(1, strip.Color(strip.gamma8(maxbrightness), 0, 0, strip.gamma8(maxbrightness)));
+          strip.setPixelColor(2, strip.Color(strip.gamma8(maxbrightness), 0, 0, strip.gamma8(maxbrightness)));
+             strip.show();  
+          delay(1000);
+          strip.setPixelColor(1, strip.Color(0, 0, 0, 0));
+          strip.setPixelColor(2, strip.Color(0, 0, 0, 0));
+             strip.show(); 
+          delay(1000); 
+      }
     Square();
     intro();
   }
   else
   { 
   }
-
+//Change ideal color if used a certain amount during the day reducing it to nothing if not used within 24hrs
+//Create a threshold for the beginning sequence to start
+// Move starting position to left side
 
 }
