@@ -7,23 +7,21 @@
 Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRBW + NEO_KHZ800);
 
 void markers(){
-    strip.setPixelColor(0, strip.Color(0, 0, 0, 125));
-    strip.setPixelColor(36, strip.Color(0, 0, 125, 0));
-    strip.setPixelColor(72, strip.Color(0, 125, 0, 0));
-    strip.setPixelColor(108, strip.Color(125, 0, 0, 0));
+    strip.fill(strip.Color(0, 0, 0, 125));
     strip.show();
 }
 
 void Square() {
 // Parameters
-  int whiteLength         = 2;
-  int stripLength        =144;
+  int whiteLength         = 3;
+  float stripLength        =123;
   int      loops           = 4;
   int      loopNum        = 0;
   int      x              = 0;
-  int maxbrightness     =255; //255
-  int timer =40; // seconds
-  int brightnessStep    =maxbrightness/timer*2; 
+  float maxbrightness     =255;
+  float minbrightness = 125;
+  int timer =16; // seconds
+  float brightnessStep    =maxbrightness*(minbrightness/maxbrightness)*(stripLength/strip.numPixels())/timer*2; 
   //unsigned long period = 3;
   
 // Timers
@@ -36,21 +34,22 @@ void Square() {
   Serial.begin(9600);
   Serial.print("Brightness Step: ");
   Serial.println(brightnessStep); 
+
   
   for (;;) { // Repeat loops value
      loopstart=millis();
 
-    for (int i = 0; i < strip.numPixels(); i++) { // For each pixel on strip
+    for (int i = 0; i < stripLength; i++) { // For each pixel on strip
       //if(loopNum<1){
       //  for (unsigned long elapsedMillis=millis(),  previousMillis = millis();
        //       (elapsedMillis-previousMillis) <period;
       //      elapsedMillis=millis()){}
        //   }
-      for (int j = 0; j < maxbrightness; j = j + brightnessStep) { // Ramp up from 0 to 255
+      for (int j = minbrightness; j < maxbrightness; j = j + brightnessStep) { // Ramp up from 0 to 255
             strip.setPixelColor(i, strip.Color(0, 0, 0, strip.gamma8(j)));
             strip.show();
         }
-      for (int j = maxbrightness; j >= 0; j = j - brightnessStep) { // Ramp down
+      for (int j = maxbrightness; j >= minbrightness; j = j - brightnessStep) { // Ramp down
         if ((loopNum >= 1) && (i < whiteLength)) {
           strip.setPixelColor(x = i - whiteLength + stripLength, strip.Color(0, 0, 0, strip.gamma8(j)));
           strip.show();
@@ -72,7 +71,7 @@ void Square() {
      Serial.print("Loop: ");
      Serial.println(loopNum);
      Serial.print("Loop Duration: ");
-     Serial.println((loopend-loopstart));
+     Serial.println((loopend-loopstart)); //unsure why this is not providing the right time
   }
 }
 void setup(){
