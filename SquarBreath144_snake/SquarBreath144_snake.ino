@@ -3,6 +3,7 @@
 #define LED_PIN     7
 #define LED_COUNT  144
 #define BRIGHTNESS 255 // (max = 255)
+#define PI 3.1415926535897932384626433832795
 Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRBW + NEO_KHZ800);
 
 // Parameters
@@ -15,10 +16,17 @@ int timer =16; // seconds
 float brightnessStep  =maxbrightness*(minbrightness/maxbrightness)*
   (stripLength/strip.numPixels())/timer*2; 
 
-//void markers(){
- //   strip.fill(strip.Color(minbrightness, 0, 0, strip.gamma8(125)));
- //   strip.show();
-//}
+void intro(){
+int period=1000;
+for (unsigned long elapsedMillis=millis(),  previousMillis = millis(), introbrightness,dampen=1;
+             (elapsedMillis-previousMillis) <3*period;
+           elapsedMillis=millis()){
+
+            introbrightness=minbrightness+abs(minbrightness*sin(PI*(elapsedMillis-previousMillis)/(period)));
+            strip.fill(strip.Color(strip.gamma8(introbrightness), 0, 0, strip.gamma8(introbrightness)));
+            strip.show();
+            }
+}
 
 void Square() {
 
@@ -80,20 +88,17 @@ void setup(){
 }
 
 void loop() {
-
+  strip.fill(strip.Color(strip.gamma8(minbrightness), 0, 0, strip.gamma8(minbrightness)));
+   strip.show();  
   int statusSensor = digitalRead (IRSensor);
   if (statusSensor == 1)
   {
-
+    intro();
     Square();
-    strip.fill(strip.Color(strip.gamma8(minbrightness), 0, 0, strip.gamma8(minbrightness)));
-    strip.show();
-
+    intro();
   }
-
   else
   { 
-    //markers();
   }
 
 
